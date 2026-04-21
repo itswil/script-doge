@@ -4,7 +4,7 @@ A lightweight, zero-dependency user script manager for Chrome (Manifest V3).
 
 - TamperMonkey, ViolentMonkey alternative
 
-## Installation
+## 1. Installation
 
 1. Download/clone this repository
 2. Open `chrome://extensions`
@@ -12,7 +12,7 @@ A lightweight, zero-dependency user script manager for Chrome (Manifest V3).
 4. Click **Load unpacked**
 5. Select this folder
 
-## Enable User Scripts
+## 2. Enable User Scripts
 
 The `chrome.userScripts` API requires user scripts to be explicitly allowed:
 
@@ -21,7 +21,7 @@ The `chrome.userScripts` API requires user scripts to be explicitly allowed:
 3. Click **Details**
 4. Enable **Allow user scripts**
 
-## Usage
+## 3. Usage
 
 1. Click the extension icon to open the popup
 2. Enter a website URL (e.g., `open.spotify.com`)
