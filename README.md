@@ -41,18 +41,20 @@ The `chrome.userScripts` API requires user scripts to be explicitly allowed:
 ### Keyboard Shortcut for Spotify Web: Left/Right Arrow for Seek back/forward
 `open.spotify.com`
 ```
-document.addEventListener('keydown', (event) => {
-  let button;
+(function() {
+  document.addEventListener('keydown', (event) => {
+    let button;
 
-  if (event.key === 'ArrowRight') {
-    button = document.querySelector('[data-testid="control-button-seek-forward-15"]');
-  } else if (event.key === 'ArrowLeft') {
-    button = document.querySelector('[data-testid="control-button-seek-back-15"]');
-  }
+    if (event.key === 'ArrowRight') {
+      button = document.querySelector('[data-testid="control-button-seek-forward-15"]');
+    } else if (event.key === 'ArrowLeft') {
+      button = document.querySelector('[data-testid="control-button-seek-back-15"]');
+    }
 
-  if (button) {
-    event.preventDefault(); 
-    button.click();
-  }
-});
+    if (button) {
+      event.preventDefault(); 
+      button.click();
+    }
+  });
+})();
 ```
