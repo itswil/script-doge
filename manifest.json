@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Script Doge",
+  "name": "Script Doge - JS Injector",
   "version": "1.0",
   "permissions": ["storage", "userScripts"],
   "host_permissions": ["<all_urls>"],

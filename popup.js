@@ -1,20 +1,22 @@
 let scripts = [];
 
 const formatPattern = (input) => {
-  if (input.includes('*')) return input;
   try {
-    const url = new URL(input.startsWith('http') ? input : `https://${input}`);
+    let clean = input.trim();
+    if (clean.includes('*')) return clean;
+    if (!clean.startsWith('http')) clean = 'https://' + clean;
+    const url = new URL(clean);
     return `*://${url.hostname}/*`;
   } catch {
-    return '*://*/*';
+    return "*://*/*";
   }
 };
 
 const save = () => chrome.storage.local.set({ scripts });
 
 const render = () => {
-  const header = document.getElementById('scripts-header');
   const container = document.getElementById('scripts');
+  const header = document.getElementById('scripts-header');
   header.style.display = scripts.length ? 'block' : 'none';
   container.innerHTML = scripts.map((s) => `
     <div class="script-item">
@@ -25,44 +27,60 @@ const render = () => {
       <pre class="script-code">${s.code}</pre>
     </div>
   `).join('');
-  container.onclick = (e) => {
-    const btn = e.target.closest('.del-btn');
-    if (!btn) return;
-    const id = btn.dataset.id;
-    chrome.runtime.sendMessage({ type: 'unregister', id });
-    scripts = scripts.filter(s => s.id !== id);
-    save();
-    render();
-  };
+
+  container.querySelectorAll('.del-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.id;
+      const resp = await chrome.runtime.sendMessage({ type: 'unregister', id });
+      if (resp.ok) {
+        scripts = scripts.filter(s => s.id !== id);
+        save();
+        render();
+      }
+    });
+  });
 };
 
-document.getElementById('save').onclick = async () => {
-  const urlVal = document.getElementById('url').value.trim();
+const load = () => {
+  chrome.storage.local.get(['scripts'], (result) => {
+    scripts = Array.isArray(result.scripts) ? result.scripts : [];
+    render();
+  });
+};
+
+document.getElementById('save').addEventListener('click', async () => {
+  const urlVal = document.getElementById('url').value;
   const codeVal = document.getElementById('code').value;
+
   if (!urlVal || !codeVal) return;
 
   const id = `script_${Date.now()}`;
-  const resp = await chrome.runtime.sendMessage({
+  const pattern = formatPattern(urlVal);
+
+  const response = await chrome.runtime.sendMessage({
     type: 'register',
     id,
-    matches: [formatPattern(urlVal)],
+    matches: [pattern],
     code: codeVal
   });
 
-  if (resp?.ok) {
-    scripts.push({ id, url: formatPattern(urlVal), code: codeVal });
+  if (response && response.ok) {
+    scripts.push({ id, url: pattern, code: codeVal });
     save();
     render();
     document.getElementById('url').value = '';
     document.getElementById('code').value = '';
+  } else {
+    alert("Error: " + (response?.error || "Check Background Console"));
   }
-};
-
-chrome.storage.local.get(['scripts'], (r) => {
-  scripts = r.scripts || [];
-  render();
 });
 
+load();
 chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
-  try { document.getElementById('url').value = new URL(tab.url).hostname; } catch {}
+  if (tab?.url) {
+    try {
+      const u = new URL(tab.url);
+      document.getElementById('url').value = u.hostname;
+    } catch {}
+  }
 });
