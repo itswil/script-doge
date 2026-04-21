@@ -1,0 +1,37 @@
+# Script Doge - Chrome Extension
+
+A lightweight user script manager for Chrome (Manifest V3).
+
+- TamperMonkey, ViolentMonkey alternative
+
+## Installation
+
+1. Download/clone this repository
+2. Open `chrome://extensions`
+3. Enable **Developer Mode** (toggle in top right)
+4. Click **Load unpacked**
+5. Select this folder
+
+## Enable User Scripts
+
+The `chrome.userScripts` API requires user scripts to be explicitly allowed:
+
+1. Go to `chrome://extensions`
+2. Find **Script Doge**
+3. Click **Details**
+4. Enable **Allow user scripts**
+
+## Usage
+
+1. Click the extension icon to open the popup
+2. Enter a website URL (e.g., `open.spotify.com`)
+3. Write your JavaScript
+4. Click **Save**
+5. Scripts auto-execute on matching pages
+
+## Notes
+
+- Scripts persist across browser sessions
+- The URL field auto-fills with the current tab's hostname
+- Scripts run in an isolated USER_SCRIPT world (page CSP does not apply)
+- Deleting from the popup unregisters the script immediately

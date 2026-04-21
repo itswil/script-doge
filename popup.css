@@ -1,0 +1,104 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  padding: 8px;
+  width: 400px;
+}
+
+.input-group input,
+.input-group textarea {
+  font-family: monospace;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  resize: none;
+}
+
+.input-group textarea {
+  height: 120px;
+  background: #1e1e1e;
+  color: #d4d4d4;
+}
+
+.input-group button {
+  width: 100%;
+  padding: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.input-group button:hover {
+  background: #1d4ed8;
+}
+
+#scripts {
+  margin-top: 16px;
+}
+
+#scripts .script-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+#scripts .script-header {
+  display: flex;
+  font-family: monospace;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+#scripts .script-url {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+#scripts .del-btn {
+  cursor: pointer;
+  padding: 10px 18px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+#scripts .script-code {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 12px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 16px 0;
+}
+
+h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
