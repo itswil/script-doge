@@ -41,7 +41,16 @@ The `chrome.userScripts` API requires user scripts to be explicitly allowed:
 ### Keyboard Shortcut for Spotify Web: Left/Right Arrow for Seek back/forward
 `open.spotify.com`
 ```
-(function() {
+// ==UserScript==
+// @name        mapSeekToArrows
+// @namespace   script-doge
+// @match       *://open.spotify.com/*
+// @grant       none
+// @version     1.0
+// @author      itswil
+// @description ArrowLeft: seek back 15s; ArrowRight: seek forward 15s
+// ==/UserScript==
+(function () {
   document.addEventListener('keydown', (event) => {
     let button;
 

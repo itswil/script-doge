@@ -12,6 +12,11 @@ const formatPattern = (input) => {
   }
 };
 
+const extractName = (code) => {
+  const match = code.match(/@name\s+(.+)/i);
+  return match ? match[1].trim() : null;
+};
+
 const save = () => chrome.storage.local.set({ scripts });
 
 const render = () => {
@@ -21,7 +26,10 @@ const render = () => {
   container.innerHTML = scripts.map((s) => `
     <div class="script-item">
       <div class="script-header">
-        <span class="script-url">${s.url}</span>
+        <div>
+          <span class="script-url">${s.url}</span>
+          ${s.name ? `<div class="script-name">${s.name}</div>` : ''}
+        </div>
         <button class="del-btn" data-id="${s.id}">Remove</button>
       </div>
       <pre class="script-code">${s.code}</pre>
@@ -65,7 +73,8 @@ document.getElementById('save').addEventListener('click', async () => {
   });
 
   if (response && response.ok) {
-    scripts.push({ id, url: pattern, code: codeVal });
+    const name = extractName(codeVal);
+    scripts.push({ id, url: pattern, code: codeVal, name });
     save();
     render();
     document.getElementById('url').value = '';
